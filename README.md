@@ -62,8 +62,6 @@ consumer-user:服务消费者
 
 ​	3.在想要被注册的服务上面增加一个dubbo的注解:@Service
 
-​	4.启动提供者项目(可在dubbo-admin观察)
-
 ```xml
         <!--dubbo-->
         <dependency>
@@ -179,7 +177,7 @@ dubbo:
 package com.yese.service;
 
 public interface UserService {
-    void bugTicket();
+    String bugTicket();
 }
 ```
 
@@ -200,30 +198,47 @@ public class UserServiceImpl implements UserService {
     private TicketService ticketService;
 
     @Override
-    public void bugTicket() {
+    public String bugTicket() {
         String ticket = ticketService.getTicket();
         System.out.println("在注册中心买到" + ticket);
+        return ticket;
     }
 }
 
 ```
 
-## 测试
-
-先启动提供者项目,再在消费者的测试类中测试
-
 ```java
-    @Autowired
-    UserService userService;
+package com.yese.controller;
 
-    @Test
-    public void test01() {
-        userService.bugTicket();
+import com.yese.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class UserController {
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("buy")
+    public String bugTicket() {
+        String ticket = userService.bugTicket();
+        return ticket;
     }
+
+}
+
 ```
 
-观察控制台打印的内容
+分别启动两个项目(可在dubbo-admin观察)
+
+启动成功后访问: http://localhost:8082/buy ,页面输出	 《三国演义》 
+
+控制台打印:买到《三国演义》
 
 
 
 整合成功!
+
+
