@@ -12,8 +12,9 @@ public class UserServiceImpl implements UserService {
     private TicketService ticketService;
 
     @Override
-    public void bugTicket() {
+    public String bugTicket() {
         String ticket = ticketService.getTicket();
         System.out.println("在注册中心买到" + ticket);
+        return ticket;
     }
 }
