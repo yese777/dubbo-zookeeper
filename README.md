@@ -228,7 +228,6 @@ public class UserController {
     }
 
 }
-
 ```
 
 分别启动两个项目(可在dubbo-admin观察)
@@ -239,6 +238,6 @@ public class UserController {
 
 
 
-整合成功!
+自此整合成功!
 
 
